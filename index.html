@@ -2,9 +2,9 @@
 <head>
     <script>
         var FONTS = [
+            'Courier',
             'YasashisaAntique',
             'VL Gothic',
-            'Courier',
         ];
 
         function initFontList() {
@@ -27,13 +27,21 @@
         }
 
         function updateWidth(e) {
-            var width = document.getElementById('width').value;
-            document.getElementById('outDiv').style.width = width;
+            var newWidth = document.getElementById('width').value;
+            console.log(`set width: ${newWidth}`);
+            document.getElementById('outDiv').style.width = newWidth;
         }
 
         function updateFont(event) {
             var newFont = event.target.value;
+            console.log(`set font-family: ${newFont}`);
             document.getElementById('outDiv').style['font-family'] = newFont;
+        }
+
+        function updateWordWrap(event) {
+            var newWrapStyle = event.target.value;
+            console.log(`set word-wrap: ${newWrapStyle}`);
+            document.getElementById('outDiv').style['word-wrap'] = newWrapStyle;
         }
 
         window.onload = () => {
@@ -42,11 +50,11 @@
             input.focus();
             input.select();
 
-            var widthElem = document.getElementById('width');
-            widthElem.addEventListener('keyup', updateWidth);
+            document.getElementById('width').onkeyup = updateWidth;
 
-            var fontSelect = document.getElementById('font');
-            fontSelect.addEventListener('change', updateFont);
+            document.getElementById('font').onchange = updateFont;
+
+            document.getElementById('wrapStyle').onchange = updateWordWrap;
 
             initFontList();
         };
@@ -63,16 +71,29 @@
             font-family: "VL Gothic";
             src: url(fonts/VL-Gothic-Regular.ttf) format("truetype");
         }
+
+        body {
+            font-family: Verdana, sans-serif;
+        }
         
         div.outDiv {
-            font-family: YasashisaAntique;
+            font-family: Courier;
             width: 500px;
+            word-wrap: normal;
             background-color: #dddddd;
             margin: 5px;
-        };
+        }
 
-        option.font {
-            
+        div.style-control {
+            display: flex;
+            font-size: 12px;
+        }
+
+        div.style-col {
+            width: auto;
+            padding: 6px;
+            margin: 3px;
+            background-color: #dddddd;
         }
     </style>
 </head>
@@ -81,13 +102,27 @@
     <textarea id="input" rows="6" cols="60">Edit text here.</textarea>
     <br>
     
-    <div style="margin: 4px;">
-        <b>Font:</b><br>
-        <select id="font">
-        </select>
+    <div class="style-control">
+
+        <div class="style-col">
+            <b>Font:</b><br>
+            <select id="font">
+            </select>
+        </div>
         
-        <b>Width:</b>
-        <input type="text" id="width" placeholder="500px">
+        <div class="style-col">
+            <b>Wrap style:</b><br>
+            <select id="wrapStyle" size="3">
+                <option value="normal" selected="true">Don't break words</option>
+                <option value="break-word">Break words</option>
+            </select>
+        </div>
+
+        <div class="style-col">
+            <b>Width:</b><br>
+            <input type="text" id="width" placeholder="500px" style="width: 60px">
+        </div>
+
     </div>
     <div class="outDiv" id="outDiv">
         <p class="text" id="output">
