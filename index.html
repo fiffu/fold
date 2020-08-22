@@ -1,0 +1,99 @@
+<html>
+<head>
+    <script>
+        var FONTS = [
+            'YasashisaAntique',
+            'VL Gothic',
+            'Courier',
+        ];
+
+        function initFontList() {
+            var sel = document.getElementById('font');
+            sel.size = FONTS.length;
+            
+            for (let i=0; i < FONTS.length; i++) {
+                var opt = document.createElement("option");
+                opt.text = FONTS[i];
+                sel.add(opt);
+
+                if (i === 0)
+                    opt.selected = true;
+            }
+        }
+
+        function updatePreview(event) {
+            var text = document.getElementById('input').value;
+            document.getElementById('output').textContent = text;
+        }
+
+        function updateWidth(e) {
+            var width = document.getElementById('width').value;
+            document.getElementById('outDiv').style.width = width;
+        }
+
+        function updateFont(event) {
+            var newFont = event.target.value;
+            document.getElementById('outDiv').style['font-family'] = newFont;
+        }
+
+        window.onload = () => {
+            var input = document.getElementById('input');
+            input.addEventListener('keyup', updatePreview);
+            input.focus();
+            input.select();
+
+            var widthElem = document.getElementById('width');
+            widthElem.addEventListener('keyup', updateWidth);
+
+            var fontSelect = document.getElementById('font');
+            fontSelect.addEventListener('change', updateFont);
+
+            initFontList();
+        };
+    </script>
+    
+
+    <style>
+        @font-face {
+            font-family: "YasashisaAntique";
+            src: url(fonts/07YasashisaAntique.ttf) format("truetype");
+        }
+
+        @font-face {
+            font-family: "VL Gothic";
+            src: url(fonts/VL-Gothic-Regular.ttf) format("truetype");
+        }
+        
+        div.outDiv {
+            font-family: YasashisaAntique;
+            width: 500px;
+            background-color: #dddddd;
+            margin: 5px;
+        };
+
+        option.font {
+            
+        }
+    </style>
+</head>
+
+<body>
+    <textarea id="input" rows="6" cols="60">Edit text here.</textarea>
+    <br>
+    
+    <div style="margin: 4px;">
+        <b>Font:</b><br>
+        <select id="font">
+        </select>
+        
+        <b>Width:</b>
+        <input type="text" id="width" placeholder="500px">
+    </div>
+    <div class="outDiv" id="outDiv">
+        <p class="text" id="output">
+            The formatted result appears here.
+        </p>
+    </div>
+</body>
+
+</html>
