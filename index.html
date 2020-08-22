@@ -1,5 +1,9 @@
+<!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+
     <script>
         var FONTS = [
             'Courier',
@@ -10,7 +14,7 @@
         function initFontList() {
             var sel = document.getElementById('font');
             sel.size = FONTS.length;
-            
+
             for (let i=0; i < FONTS.length; i++) {
                 var opt = document.createElement("option");
                 opt.text = FONTS[i];
@@ -59,7 +63,7 @@
             initFontList();
         };
     </script>
-    
+
 
     <style>
         @font-face {
@@ -74,8 +78,13 @@
 
         body {
             font-family: Verdana, sans-serif;
+            margin: 0px;
         }
-        
+
+        div.main {
+            margin: 8px;
+        }
+
         div.outDiv {
             font-family: Courier;
             width: 500px;
@@ -83,6 +92,7 @@
             white-space: break-spaces;
             background-color: #dddddd;
             margin: 5px;
+            border: 1px black;
         }
 
         div.style-control {
@@ -96,36 +106,75 @@
             margin: 3px;
             background-color: #dddddd;
         }
+
+        div.footer-container {
+            background-color: #dddddd;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            margin: 0px;
+            width: 100%;
+        }
+
+        div.footer-contents {
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+
+        div.footer-text {
+            display: inline;
+            position: relative;
+            bottom: 0.5rem;
+        }
+
+        .no-line {
+            text-decoration: none;
+            color: #000;
+        }
     </style>
 </head>
 
 <body>
-    <textarea id="input" rows="6" cols="60">Edit text here.</textarea>
-    <br>
-    
-    <div class="style-control">
+    <div class="main">
+        <textarea id="input" rows="6" cols="60">Edit text here.</textarea>
+        <br>
 
-        <div class="style-col">
-            <b>Font:</b><br>
-            <select id="font">
-            </select>
-        </div>
-        
-        <div class="style-col">
-            <b>Wrap style:</b><br>
-            <select id="wrapStyle" size="2">
-                <option value="normal" selected="true">Don't break words</option>
-                <option value="break-word">Break words</option>
-            </select>
-        </div>
+        <div class="style-control">
 
-        <div class="style-col">
-            <b>Width:</b><br>
-            <input type="text" id="width" placeholder="500px" style="width: 60px">
-        </div>
+            <div class="style-col">
+                <b>Font:</b><br>
+                <select id="font">
+                </select>
+            </div>
 
+            <div class="style-col">
+                <b>Wrap style:</b><br>
+                <select id="wrapStyle" size="2">
+                    <option value="normal" selected="true">Don't break words</option>
+                    <option value="break-word">Break words</option>
+                </select>
+            </div>
+
+            <div class="style-col">
+                <b>Width:</b><br>
+                <input type="text" id="width" placeholder="500px" style="width: 60px">
+            </div>
+
+        </div>
+        <div class="outDiv" id="outDiv"><p class="text" id="output">The formatted result appears here.</p></div>
+
+    </div>  <!-- /main -->
+
+    <div class="footer-container">
+        <div class="footer-contents">
+            <a href="https://github.com/fiffu/fold/" class="no-line">
+                <img src="github.png" width="16px" height="16px" style="padding: 6px; padding-right: 0px">
+            </a>
+            <div class="footer-text">
+                <a href="https://github.com/fiffu/fold/" class="no-line">github/fiffu</a>
+            </div>
+        </div>
     </div>
-    <div class="outDiv" id="outDiv"><p class="text" id="output">The formatted result appears here.</p></div>
 </body>
 
 </html>
