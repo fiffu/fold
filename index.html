@@ -80,6 +80,7 @@
             font-family: Courier;
             width: 500px;
             word-wrap: normal;
+            white-space: break-spaces;
             background-color: #dddddd;
             margin: 5px;
         }
@@ -112,7 +113,7 @@
         
         <div class="style-col">
             <b>Wrap style:</b><br>
-            <select id="wrapStyle" size="3">
+            <select id="wrapStyle" size="2">
                 <option value="normal" selected="true">Don't break words</option>
                 <option value="break-word">Break words</option>
             </select>
@@ -124,11 +125,7 @@
         </div>
 
     </div>
-    <div class="outDiv" id="outDiv">
-        <p class="text" id="output">
-            The formatted result appears here.
-        </p>
-    </div>
+    <div class="outDiv" id="outDiv"><p class="text" id="output">The formatted result appears here.</p></div>
 </body>
 
 </html>
