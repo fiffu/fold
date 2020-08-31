@@ -11,6 +11,16 @@
             'VL Gothic',
         ];
 
+        var REPLACEMENTS = {
+            // ' ': '&nbsp;',
+        }
+
+        var inPlaceReplace = function(text) {
+            var rep = REPLACEMENTS;
+            for (key in rep)
+                text.replace(key, rep[key]);
+        }
+
         function initFontList() {
             var sel = document.getElementById('font');
             sel.size = FONTS.length;
@@ -27,6 +37,7 @@
 
         function updatePreview(event) {
             var text = document.getElementById('input').value;
+            inPlaceReplace(text)
             document.getElementById('output').textContent = text;
         }
 
@@ -58,7 +69,7 @@
 
             document.getElementById('font').onchange = updateFont;
 
-            document.getElementById('wrapStyle').onchange = updateWordWrap;
+            // document.getElementById('wrapStyle').onchange = updateWordWrap;
 
             initFontList();
         };
@@ -85,11 +96,16 @@
             margin: 8px;
         }
 
+        #input {
+            width: 90%;
+            height: 6em;
+        }
+
         div.outDiv {
             font-family: Courier;
             width: 500px;
             word-wrap: normal;
-            white-space: break-spaces;
+            white-space: pre;
             background-color: #dddddd;
             margin: 5px;
             border: 1px black;
@@ -136,7 +152,7 @@
 
 <body>
     <div class="main">
-        <textarea id="input" rows="6" cols="60">Edit text here.</textarea>
+        <textarea id="input">Edit text here.</textarea>
         <br>
 
         <div class="style-control">
@@ -147,6 +163,7 @@
                 </select>
             </div>
 
+<!--
             <div class="style-col">
                 <b>Wrap style:</b><br>
                 <select id="wrapStyle" size="2">
@@ -154,6 +171,7 @@
                     <option value="break-word">Break words</option>
                 </select>
             </div>
+-->
 
             <div class="style-col">
                 <b>Width:</b><br>
