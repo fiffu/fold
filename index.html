@@ -47,7 +47,7 @@
 
         /* @param spec {object} - object with keys { name, url, format } */
         function registerFont(spec, elSelect, elStyle) {
-            const { name, url, local format } = spec;
+            const { name, url, local, format } = spec;
             var elOption = undefined;
             if (!name) {
                 console.log('registerFont - missing args: name');
