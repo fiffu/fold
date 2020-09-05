@@ -9,9 +9,19 @@
 
     <script>
         var FONTS = [
-            'Courier',
-            'YasashisaAntique',
-            'VL Gothic',
+            {
+                name: 'Courier, monospace'
+            },
+            {
+                name: 'YasashisaAntique',
+                url: 'fonts/07YasashisaAntique.ttf',
+                format: 'truetype'
+            },
+            {
+                name: 'VL Gothic',
+                url: 'fonts/VL-Gothic-Regular.ttf',
+                format: 'truetype'
+            },
         ];
 
         var REPLACEMENTS = {
@@ -24,17 +34,70 @@
                 text.replace(key, rep[key]);
         }
 
+
+        function getStylesheetById(id) {
+            for (let i=0; i < document.styleSheets.length; i++) {
+                var sheet = document.styleSheets[i];
+                console.log(sheet);
+                if ((sheet.ownerNode || {}).id === id) {
+                    return sheet;
+                }
+            }
+        }
+
+        /* @param spec {object} - object with keys { name, url, format } */
+        function registerFont(spec, elSelect, elStyle) {
+            const { name, url, local format } = spec;
+            var elOption = undefined;
+            if (!name) {
+                console.log('registerFont - missing args: name');
+                return;
+            }
+
+            if (elSelect) {
+                elOption = document.createElement("option");
+                elOption.text = name;
+                elSelect.add(elOption);
+                elSelect.size += 1;
+            }
+
+            if (elStyle) {
+                if ((local || url) && format) {
+                    var local_func = `local(${local || name}),`;
+                    var url_func   = url ? `url(${url}),` : '';
+
+                    const rule = `@font-face {
+                        font-family: "${name}";
+                        src:
+                            ${local_func},
+                            ${url_func},
+                            format("${format}");
+                        }`;
+                    elStyle.insertRule(rule);
+
+                    console.log(`registerFont: registered ${name}`)
+
+                } else {
+                    console.log(`registerFont: no url or format for "${name}"`);
+                    return;
+                }
+            }
+
+            return elOption;
+        }
+
+
         function initFontList() {
-            var sel = document.getElementById('font');
-            sel.size = FONTS.length;
+            const elSelect = document.getElementById('font');
+            const elStyle = getStylesheetById('styles');
 
             for (let i=0; i < FONTS.length; i++) {
-                var opt = document.createElement("option");
-                opt.text = FONTS[i];
-                sel.add(opt);
-
-                if (i === 0)
-                    opt.selected = true;
+                var fontSpec = FONTS[i];
+                var elOption = registerFont(fontSpec, elSelect, elStyle);
+                if (i === 0 && elOption) {
+                    console.log(elOption);
+                    elOption.selected = true;
+                }
             }
         }
 
@@ -79,7 +142,7 @@
     </script>
 
 
-    <style>
+    <style id="styles">
         @font-face {
             font-family: "YasashisaAntique";
             src: url(fonts/07YasashisaAntique.ttf) format("truetype");
